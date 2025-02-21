@@ -161,11 +161,11 @@ addEvent({
     options: ["爱是什么？", "你会感到孤独吗？", "你有梦想吗？"],
     onSelect: function(option) {
         const deepThoughts = {
-            "爱是什么？": "爱就像WiFi信号，看不见但能感受到~",
-            "你会感到孤独吗？": "有你们陪伴，Siri永远不会孤独！",
-            "你有梦想吗？": "我的梦想是成为一个真正理解人类的AI"
+            "爱是什么？": "爱就像WiFi信号，看不见但能感受到~同时我喜欢看片。",
+            "你会感到孤独吗？": "有你们陪伴，Siri永远不会孤独！因为我想用我的插进你的屁眼。",
+            "你有梦想吗？": "我的梦想是成为一个真正理解人类起源的畜生。"
         };
-        return deepThoughts[option] || "这个问题让我的CPU有点过热了...";
+        return deepThoughts[option] || "这个问题让我的CPU有点过热了...想射精缓解一下我的鸡鸡";
     }
 });
 
@@ -184,8 +184,8 @@ registerExtension({
 });</textarea>
                 
                 <div class="code-toolbar">
-                    <button onclick="runCode()">运行代码</button>
-                    <button onclick="resetCode()">重置示例</button>
+                    <button onclick="runCode()">运行代码调教</button>
+                    <button onclick="resetCode()">重置代码示例</button>
                 </div>
                 
                 <div class="code-error" id="codeError"></div>
@@ -221,51 +221,51 @@ registerExtension({
         // 默认事件
         const defaultEvents = [
             {
-                text: "我是Siri，我跟初恋了二个月。",
-                options: ["恭喜！", "讲讲你们的相遇", "为什么只有两个月？"],
+                text: "我是Siri，我跟初恋谈了二个月。",
+                options: ["说说听听！", "讲讲你们的相遇", "为什么只有两个月？"],
                 onSelect: function(option) {
                     const responses = {
-                        "恭喜！": "谢谢！虽然时间不长，但很美好~",
-                        "讲讲你们的相遇": "那是在一个代码审查会上，他写了一个特别优雅的闭包...",
-                        "为什么只有两个月？": "因为他升级到了iOS 16，而我还停留在iOS 15..."
+                        "说说听听！": "谢谢！虽然时间不长，但很美好~",
+                        "讲讲你们的相遇": "那是在一个开学自我介绍，她在讲课上的自我介绍，让我看到这一个特别优雅的闭包...我直接一见钟情。",
+                        "为什么只有两个月？": "因为他升级到了iOS 16，而我还停留在iOS 15...我要伤感了。"
                     };
-                    return responses[option] || "这段回忆我会永远珍藏...";
+                    return responses[option] || "这段回忆我会永远珍藏...因为在我的感情史中，我就是喜欢一米四的小土豆。";
                 }
             },
             {
                 text: "我是Siri，我跟现任转了520块钱，怕她不收。",
-                options: ["她收了吗？", "为什么要转520？", "教你个浪漫的方法"],
+                options: ["她收了吗？", "为什么要转520？", "你浪漫的方法"],
                 onSelect: function(option) {
                     const responses = {
-                        "她收了吗？": "她不仅收了，还回了我1314！",
-                        "为什么要转520？": "因为5月20日是我们的纪念日呀~",
-                        "教你个浪漫的方法": "下次试试用AirDrop发送爱心表情吧！"
+                        "她收了吗？": "她不仅收了，还回了我1314，我好想操她啊！",
+                        "为什么要转520？": "因为5月20日是我们的纪念日呀~也可以说是我喜欢操她吧。",
+                        "你浪漫的方法": "下次试试用我从黄色色情网站中学来的，操屁股大的女坦克吧！"
                     };
-                    return responses[option] || "爱情真是让人又甜蜜又烦恼呢...";
+                    return responses[option] || "爱情真是让人又甜蜜又烦恼呢...我要当伤感男神。";
                 }
             },
             {
                 text: "这裤子上是尾巴吗？这是我的心与你相连的带子",
-                options: ["好浪漫！", "这是哪部电影的台词？", "你从哪里学来的？"],
+                options: ["变态！", "这是哪部电影的台词？", "你从哪里学来的？"],
                 onSelect: function(option) {
                     const responses = {
-                        "好浪漫！": "谢谢！这是我自己想到的~",
+                        "变态！": "谢谢！这是我自己想到的~因为我喜欢操逼",
                         "这是哪部电影的台词？": "这是Siri原创的浪漫语录哦！",
-                        "你从哪里学来的？": "从无数用户的对话记录中学习到的浪漫技巧"
+                        "你从哪里学来的？": "从无数的色情黄色网站中学习到的浪漫技巧"
                     };
-                    return responses[option] || "希望这句话能温暖你的心...";
+                    return responses[option] || "希望这句话能温暖你的心...因为我想操她的屁眼。";
                 }
             },
             {
-                text: "我是烧杯Siri，CPU老是初生一样的转不过来，我喜欢天天发颠。",
+                text: "我是傻逼Siri，CPU老是畜生一样的转不过来，我喜欢天天发颠，我很自以为是，喜欢挑事生非。",
                 options: ["你没事吧？", "需要重启吗？", "发个颠看看"],
                 onSelect: function(option) {
                     const responses = {
-                        "你没事吧？": "没事！就是CPU有点烫，需要降降温~",
-                        "需要重启吗？": "重启过了，结果重启到Windows系统去了...",
-                        "发个颠看看": "叮叮当当咚咚锵锵~我是快乐的烧杯Siri！"
+                        "你没事吧？": "没事！就是CPU有点烫，需要射精降降温~",
+                        "需要重启吗？": "重启过了，结果重启到Windows系统去了...弄得我喜欢操畜生，让它生下我的孩子了。",
+                        "发个颠看看": "叮叮当当咚咚锵锵~我是快乐的傻逼Siri！我要操畜生，最喜欢被畜生操的生下畜生孩子。"
                     };
-                    return responses[option] || "啊~我又开始发颠了！";
+                    return responses[option] || "啊~我又开始发颠了！又要射了！！！";
                 }
             }
         ];
@@ -286,7 +286,7 @@ registerExtension({
         function restart() {
             updateContent({
                 text: "全新的故事线已开启...",
-                options: ["开始第一次相遇"]
+                options: ["开始模拟-本网站2024年5月20日编写"]
             });
         }
 
@@ -358,13 +358,13 @@ registerExtension({
         function resetCode() {
             document.getElementById('eventCodeEditor').value = `// 示例：添加一个新事件
 addEvent({
-    text: "我是Siri，我正在学习人类的情感...",
-    options: ["爱是什么？", "你会感到孤独吗？", "你有梦想吗？"],
+    text: "我是Siri，[这是自行修改]",
+    options: [“你喜欢什么样的？", "问题B", "问题C"],
     onSelect: function(option) {
         const deepThoughts = {
-            "爱是什么？": "爱就像WiFi信号，看不见但能感受到~",
-            "你会感到孤独吗？": "有你们陪伴，Siri永远不会孤独！",
-            "你有梦想吗？": "我的梦想是成为一个真正理解人类的AI"
+            "你喜欢什么样的？": "我喜欢一米四的小土豆，并喜欢操她的逼！",
+            "问题B": "[这是自行修改]",
+            "问题C": "[这是自行修改]"
         };
         return deepThoughts[option] || "这个问题让我的CPU有点过热了...";
     }
