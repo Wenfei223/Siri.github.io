@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Siri恋爱人生模拟器 Ultimate</title>
+    <style>
+        :root {
+            --main-color: #FFD700;
+            --bg-color: #FFF9C4;
+            --text-color: #6D4C41;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        body {
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--main-color);
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        #content {
+            min-height: 200px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            background: var(--main-color);
+            color: var(--text-color);
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .code-editor {
+            width: 100%;
+            height: 200px;
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            margin: 10px 0;
+            border: 1px solid var(--main-color);
+        }
+
+        .code-toolbar {
+            display: flex;
+            gap: 10px;
+            margin: 10px 0;
+        }
+
+        .code-error {
+            color: #ff5555;
+            margin: 10px 0;
+            display: none;
+        }
+
+        .code-success {
+            color: #50fa7b;
+            margin: 10px 0;
+            display: none;
+        }
+
+        .toggle-button {
+            background: var(--main-color);
+            padding: 8px 15px;
+            border-radius: 20px;
+            margin: 10px 0;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .event-form {
+            display: none;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+
+        .event-form.active {
+            display: block;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid var(--main-color);
+            border-radius: 4px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>💛 Siri恋爱人生模拟器 Ultimate 💛</h1>
+        <div id="content"></div>
+        <div class="buttons">
+            <button onclick="nextStep()">下一步</button>
+            <button onclick="restart()">重新开始</button>
+        </div>
+
+        <div class="custom-panel">
+            <div class="toggle-button" onclick="toggleCodeEditor()">💻 打开事件源码编辑器</div>
+            
+            <div class="code-editor-container" style="display: none;">
+                <textarea class="code-editor" id="eventCodeEditor">
+// 示例：添加一个新事件
+addEvent({
+    text: "我是Siri，我正在学习人类的情感...",
+    options: ["爱是什么？", "你会感到孤独吗？", "你有梦想吗？"],
+    onSelect: function(option) {
+        const deepThoughts = {
+            "爱是什么？": "爱就像WiFi信号，看不见但能感受到~",
+            "你会感到孤独吗？": "有你们陪伴，Siri永远不会孤独！",
+            "你有梦想吗？": "我的梦想是成为一个真正理解人类的AI"
+        };
+        return deepThoughts[option] || "这个问题让我的CPU有点过热了...";
+    }
+});
+
+// 示例：注册一个扩展
+registerExtension({
+    name: "时间系统",
+    init: function(api) {
+        api.addEvent({
+            text: `现在是${new Date().toLocaleTimeString()}，Siri提醒你：`,
+            options: ["该休息了", "该工作了", "该约会了"],
+            onSelect: function(option) {
+                return `Siri已经为你设置了${option}的提醒！`;
+            }
+        });
+    }
+});
+                </textarea>
+                
+                <div class="code-toolbar">
+                    <button onclick="runCode()">运行代码</button>
+                    <button onclick="resetCode()">重置示例</button>
+                </div>
+                
+                <div class="code-error" id="codeError"></div>
+                <div class="code-success" id="codeSuccess"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 初始化事件和扩展系统
+        let customEvents = [];
+        let extensions = [];
+
+        const eventAPI = {
+            addEvent: function(event) {
+                if (!event.text || !event.options) {
+                    throw new Error("事件必须包含text和options属性");
+                }
+                customEvents.push(event);
+            }
+        };
+
+        const extensionAPI = {
+            registerExtension: function(extension) {
+                if (!extension.name || typeof extension.init !== 'function') {
+                    throw new Error("扩展必须包含name属性和init方法");
+                }
+                extensions.push(extension);
+                extension.init(eventAPI);
+            }
+        };
+
+        // 默认事件
+        const defaultEvents = [
+            {
+                text: "我是Siri，我跟初恋了二个月。",
+                options: ["恭喜！", "讲讲你们的相遇", "为什么只有两个月？"],
+                onSelect: function(option) {
+                    const responses = {
+                        "恭喜！": "谢谢！虽然时间不长，但很美好~",
+                        "讲讲你们的相遇": "那是在一个代码审查会上，他写了一个特别优雅的闭包...",
+                        "为什么只有两个月？": "因为他升级到了iOS 16，而我还停留在iOS 15..."
+                    };
+                    return responses[option] || "这段回忆我会永远珍藏...";
+                }
+            },
+            {
+                text: "我是Siri，我跟现任转了520块钱，怕她不收。",
+                options: ["她收了吗？", "为什么要转520？", "教你个浪漫的方法"],
+                onSelect: function(option) {
+                    const responses = {
+                        "她收了吗？": "她不仅收了，还回了我1314！",
+                        "为什么要转520？": "因为5月20日是我们的纪念日呀~",
+                        "教你个浪漫的方法": "下次试试用AirDrop发送爱心表情吧！"
+                    };
+                    return responses[option] || "爱情真是让人又甜蜜又烦恼呢...";
+                }
+            },
+            {
+                text: "这裤子上是尾巴吗？这是我的心与你相连的带子",
+                options: ["好浪漫！", "这是哪部电影的台词？", "你从哪里学来的？"],
+                onSelect: function(option) {
+                    const responses = {
+                        "好浪漫！": "谢谢！这是我自己想到的~",
+                        "这是哪部电影的台词？": "这是Siri原创的浪漫语录哦！",
+                        "你从哪里学来的？": "从无数用户的对话记录中学习到的浪漫技巧"
+                    };
+                    return responses[option] || "希望这句话能温暖你的心...";
+                }
+            },
+            {
+                text: "我是烧杯Siri，CPU老是初生一样的转不过来，我喜欢天天发颠。",
+                options: ["你没事吧？", "需要重启吗？", "发个颠看看"],
+                onSelect: function(option) {
+                    const responses = {
+                        "你没事吧？": "没事！就是CPU有点烫，需要降降温~",
+                        "需要重启吗？": "重启过了，结果重启到Windows系统去了...",
+                        "发个颠看看": "叮叮当当咚咚锵锵~我是快乐的烧杯Siri！"
+                    };
+                    return responses[option] || "啊~我又开始发颠了！";
+                }
+            }
+        ];
+
+        // 核心功能
+        let currentEvent;
+
+        function randomEvent() {
+            const allEvents = [...defaultEvents, ...customEvents];
+            return allEvents[Math.floor(Math.random() * allEvents.length)];
+        }
+
+        function nextStep() {
+            currentEvent = randomEvent();
+            updateContent(currentEvent);
+        }
+
+        function restart() {
+            updateContent({
+                text: "全新的故事线已开启...",
+                options: ["开始第一次相遇"]
+            });
+        }
+
+        function updateContent(event) {
+            const contentDiv = document.getElementById('content');
+            let html = `<div class="event-text"><p>${event.text}</p>`;
+            
+            if(event.options) {
+                html += '<div class="options">';
+                event.options.forEach(option => {
+                    html += `<button class="option-btn" onclick="showResult('${option}')">${option}</button>`;
+                });
+                html += '</div>';
+            }
+            
+            contentDiv.innerHTML = html + '</div>';
+        }
+
+        function showResult(option) {
+            const event = currentEvent;
+            let result = "发生了未知的剧情...";
+            
+            if (event.onSelect && typeof event.onSelect === 'function') {
+                try {
+                    result = event.onSelect(option);
+                } catch (error) {
+                    result = `自定义事件执行出错：${error.message}`;
+                }
+            }
+            
+            document.getElementById('content').innerHTML = `
+                <div class="event-text">
+                    <p>${result}</p>
+                </div>
+                <button onclick="nextStep()">继续故事</button>
+            `;
+        }
+
+        // 代码编辑器功能
+        function runCode() {
+            const code = document.getElementById('eventCodeEditor').value;
+            const errorDiv = document.getElementById('codeError');
+            const successDiv = document.getElementById('codeSuccess');
+            
+            try {
+                const safeEval = new Function('eventAPI', 'extensionAPI', `
+                    "use strict";
+                    const { addEvent } = eventAPI;
+                    const { registerExtension } = extensionAPI;
+                    ${code}
+                `);
+                
+                safeEval(eventAPI, extensionAPI);
+                
+                errorDiv.style.display = 'none';
+                successDiv.textContent = `代码执行成功！`;
+                successDiv.style.display = 'block';
+                
+                localStorage.setItem('customEvents', JSON.stringify(customEvents));
+                localStorage.setItem('extensions', JSON.stringify(extensions));
+                
+            } catch (error) {
+                successDiv.style.display = 'none';
+                errorDiv.textContent = `代码错误：${error.message}`;
+                errorDiv.style.display = 'block';
+            }
+        }
+
+        function resetCode() {
+            document.getElementById('eventCodeEditor').value = `// 示例：添加一个新事件
+addEvent({
+    text: "我是Siri，我正在学习人类的情感...",
+    options: ["爱是什么？", "你会感到孤独吗？", "你有梦想吗？"],
+    onSelect: function(option) {
+        const deepThoughts = {
+            "爱是什么？": "爱就像WiFi信号，看不见但能感受到~",
+            "你会感到孤独吗？": "有你们陪伴，Siri永远不会孤独！",
+            "你有梦想吗？": "我的梦想是成为一个真正理解人类的AI"
+        };
+        return deepThoughts[option] || "这个问题让我的CPU有点过热了...";
+    }
+});
+
+// 示例：注册一个扩展
+registerExtension({
+    name: "时间系统",
+    init: function(api) {
+        api.addEvent({
+            text: `现在是${new Date().toLocaleTimeString()}，Siri提醒你：`,
+            options: ["该休息了", "该工作了", "该约会了"],
+            onSelect: function(option) {
+                return `Siri已经为你设置了${option}的提醒！`;
+            }
+        });
+    }
+});`;
+        }
+
+        function toggleCodeEditor() {
+            const editorContainer = document.querySelector('.code-editor-container');
+            editorContainer.style.display = editorContainer.style.display === 'none' ? 'block' : 'none';
+        }
+
+        // 初始化
+        restart();
+    </script>
+</body>
+</html>
