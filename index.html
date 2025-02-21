@@ -155,8 +155,7 @@
             <div class="toggle-button" onclick="toggleCodeEditor()">💻 打开事件源码编辑器</div>
             
             <div class="code-editor-container" style="display: none;">
-                <textarea class="code-editor" id="eventCodeEditor">
-// 示例：添加一个新事件
+                <textarea class="code-editor" id="eventCodeEditor">// 示例：添加一个新事件
 addEvent({
     text: "我是Siri，我正在学习人类的情感...",
     options: ["爱是什么？", "你会感到孤独吗？", "你有梦想吗？"],
@@ -182,8 +181,7 @@ registerExtension({
             }
         });
     }
-});
-                </textarea>
+});</textarea>
                 
                 <div class="code-toolbar">
                     <button onclick="runCode()">运行代码</button>
@@ -377,10 +375,10 @@ registerExtension({
     name: "时间系统",
     init: function(api) {
         api.addEvent({
-            text: `现在是${new Date().toLocaleTimeString()}，Siri提醒你：`,
+            text: \`现在是\${new Date().toLocaleTimeString()}，Siri提醒你：\`,
             options: ["该休息了", "该工作了", "该约会了"],
             onSelect: function(option) {
-                return `Siri已经为你设置了${option}的提醒！`;
+                return \`Siri已经为你设置了\${option}的提醒！\`;
             }
         });
     }
